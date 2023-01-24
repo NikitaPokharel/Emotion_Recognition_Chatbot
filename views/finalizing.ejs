@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapy Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:ital,wght@0,100;0,200;0,300;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/Style.css' />
+    <link rel='stylesheet' href='/stylesheets/home.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   
+</head>
+<body>
+    <nav>
+    <label class="logo">EMOTE</label>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/chat">Chat</a></li>
+        <li><a href="/quote">Quote</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+</nav>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="container col-lg-12 col-md-12 col-xs-12">
+            <center>
+            <div class="row col-12" id="chatbox">
+                <!-- <center><h3>Chat with CareBot</h3>
+                    <p id="status">You have started the chat yet!<br/>
+                    Please start the conversation.</p>
+
+                </center> -->
+
+            </div>
+            </center>
+            
+        </div>    
+
+    </div>
+    
+</div>
+
+
+        <div class=" mic col-4 text-center">
+
+            <i class="fa fa-microphone fa-3x"></i>
+            <br/>
+            <span id="record" style="color: red; font-size: 15px;"></span>    
+            <h6>Speak here</h6>
+        </div>
+
+        <script>
+       
+
+    
+            const button = document.querySelector('i');
+    
+            const options = {mimeType: 'audio/webm'};
+            const buffer = [];
+            var mediaRecorder = null;
+            // start the recording
+            const startRecording = function() {
+                mediaRecorder.start();
+                // button.classList.toggle('btn-info');
+                button.removeEventListener('click', startRecording);
+                button.addEventListener('click', stopRecording);
+                document.getElementById('record').innerHTML = "Recording";
+                document.getElementById('status').style.display="none";
+    
+            }
+    
+            // stop the recording
+            const stopRecording = function() {
+                mediaRecorder.stop();
+                // button.textContent = 'fa-microphone';
+                // button.classList.toggle('btn-info');
+                button.removeEventListener('click', stopRecording);
+                button.addEventListener('click', startRecording);
+                document.getElementById('record').innerHTML = "";
+            }
+    
+            // init the audio system
+            const handleInit = function(stream) {
+                // start recording with a click of the button
+                button.addEventListener('click', startRecording);
+    
+                // the mediaRecord object that captures the stream
+                mediaRecorder = new MediaRecorder(stream, options);
+    
+                // catches stream of bytearray
+                mediaRecorder.addEventListener('dataavailable', function(e) {
+                    if (e.data.size > 0) buffer.push(e.data);
+                });
+    
+                // when stopped, create a file and allow playback
+                mediaRecorder.addEventListener('stop', function() {
+                    // create a file
+                    const file = new File(buffer, 'audio.webm', {
+                        type: 'audio/webm',
+                        lastModified: Date.now()
+                    });
+                    console.log(file);
+                    
+                    const formdata = new FormData();
+                    formdata.append('audio', file);
+                    console.log(formdata);
+                    fetch("http://localhost:8000/audio", {
+                        method: "POST",
+                        body: formdata
+                    }).then(res => res.json()).then(data => {
+                        var recogtext = data.texts;
+                        var textreply= data.reply;
+                        $('#chatbox').append(
+                        $('<div/>')
+                        .attr("id","msg")
+                        .addClass("msg")
+                        .append(
+                            $('<p/>')
+                            .addClass("msg")
+                            .text("YOU : " +recogtext)
+                        
+                        )
+                        .append(
+                            $('<p/>')
+                            .addClass("reply")
+                            
+                            .text("EMOTE : " +textreply)
+                        )
+                        .append(
+    
+                            $('<hr/>')
+                            .addClass("hr")
+                        )
+                    );
+                    })
+            
+                buffer.length = 0; // empty the buffer for the next one
+                });          
+            };
+    
+            // init the stream from the audio device
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+                .then(handleInit);
+    
+        </script>
+
+
+</body>
+</html>

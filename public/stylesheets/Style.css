@@ -1,0 +1,123 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+nav{
+    font-family: 'Roboto', sans-serif;
+    background-color: teal;
+    height: 70px;
+    width: 100%;
+}
+label.logo{
+    color: white;
+    font-size: 35px;
+    line-height: 80px;
+    padding: 0 75px;
+    font-weight: bold;
+}
+nav ul{
+    float: right;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+nav ul li a{
+    color: white;
+    font-size: 17px;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-decoration: none;
+
+}
+a.active, a:hover{
+    background: rgb(139, 218, 218);
+    transition: .5s;
+}
+
+
+
+
+.box {
+    height: 700px;
+    width: 100%;
+    /* background-color: rgb(215, 236, 236); */
+    background-color: rgb(234, 250, 250);
+  }
+  
+  
+img.logo-img{
+    position: absolute;
+    float: right;
+   margin-left: 750px;
+    height: 510px;
+    width: 510px;
+  }
+  
+.box p{
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    float: left;
+    margin-top: 140px;
+    margin-left: 100px;
+}
+
+.box a{
+    float: left;
+    margin-top: 260px;
+    margin-left: -395px;
+    color: white;
+    font-size: 21px;
+    width: 180px;
+    background-color:teal;
+}
+
+img.quote-img{
+    position: absolute;
+    float: left;
+    /* margin-left: 300px; */
+    height: 280px;
+    width: 280px;
+    margin-top: -130px;
+    margin-left: -50px;
+}
+
+.quote_box{
+    height: 300px;
+    width: 800px;
+    margin-left: 270px;
+    border-radius: 10px;
+    margin-top: 90px;
+    /* background-color: rgb(215, 236, 236); */
+    background-color: rgb(234, 250, 250);
+}
+
+.quote_box h3{
+    margin-left: 300px;
+    color: rgb(15, 107, 107);
+}
+    
+.quote_box p{
+    margin-left: 200px;
+    font-weight:bold;
+    
+}   
+
+.quote_box footer{
+    font-weight: bold;
+}
