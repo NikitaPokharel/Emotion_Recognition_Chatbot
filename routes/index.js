@@ -15,4 +15,8 @@ router.get('/quote',function(req,res,next){
   res.render('quote');
 });
 
+router.get('/about',function(req,res,next){
+  res.render('about');
+});
+
 module.exports = router;
