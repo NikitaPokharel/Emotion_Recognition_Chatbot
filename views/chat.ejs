@@ -33,6 +33,10 @@
                 <div class="send" id="msg-cont">
 
                 </div>
+            
+                <div class="receive" id="rep-cont">
+
+                </div>
                 <!-- <center><h3>Chat with CareBot</h3>
                     <p id="status">You have started the chat yet!<br/>
                     Please start the conversation.</p>
@@ -112,41 +116,48 @@
                     const formdata = new FormData();
                     formdata.append('audio', file);
                     console.log(formdata);
+                    
+                    function addMessage(recogtext, textreply) {
+                        $('#chatbox').append(
+                            $('<div/>')
+                            .attr("id","msg")
+                            .addClass("msg")
+                            .append(
+                                $('<div/>')
+                                .attr("id","msg-cont")
+                                .append(
+                                    $('<p/>')
+                                    .addClass("msg")
+                                    .text("   YOU :  " +recogtext)
+                                )
+                            )
+                        );
+                        $('#chatbox').append(
+                            $('<div/>')
+                            .attr("id","msg")
+                            .addClass("msg")
+                            .append(
+                                $('<div/>')
+                                .attr("id","rep-cont")
+                                .append(
+                                    $('<p/>')
+                                    .addClass("reply")
+                                    .text("   EMOTE :  " +textreply)
+                                )
+                            )
+                        );
+                    }
+
                     fetch("http://localhost:8000/audio", {
                         method: "POST",
                         body: formdata
                     }).then(res => res.json()).then(data => {
                         var recogtext = data.texts;
                         var textreply= data.reply;
-                        $('#chatbox').append(
-                        $('<div/>')
-                        .attr("id","msg")
-                        .addClass("msg")
-                        .append(
-                            $('#msg-cont')      
+                         addMessage(recogtext,textreply)
+                    });
 
-                        .append(
-                            $('<p/>')
-                            .addClass("msg")
-                            .text("YOU : " +recogtext)
-                        )
-                        
-                        )
-                        .append(
-                            $('<p/>')
-                            .addClass("reply")
-                            
-                            .text("EMOTE : " +textreply)
-                        )
-                        .append(
-    
-                            $('<hr/>')
-                            .addClass("hr")
-                        )
-                    );
-                    })
-            
-                buffer.length = 0; // empty the buffer for the next one
+            buffer.length = 0; // empty the buffer for the next one
                 });          
             };
     
@@ -155,6 +166,9 @@
                 .then(handleInit);
     
         </script>
+
+
+
 
 
 </body>
