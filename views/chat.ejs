@@ -20,7 +20,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/chat">Chat</a></li>
         <li><a href="/quote">Quote</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="/about">About</a></li>
     </ul>
 </nav>
 
@@ -78,6 +78,7 @@
                 button.addEventListener('click', stopRecording);
                 document.getElementById('record').innerHTML = "Recording";
                 document.getElementById('status').style.display="none";
+               
     
             }
     
@@ -126,12 +127,23 @@
                                 $('<div/>')
                                 .attr("id","msg-cont")
                                 .append(
-                                    $('<p/>')
-                                    .addClass("msg")
-                                    .text("   YOU :  " +recogtext)
+                                        $('<p/>')
+                                        .attr("id","recog-msg")
+                                        .addClass("msg")
+                                        // .text("   YOU :  " +recogtext)
+                                        .text(recogtext)
+                                )
+                                .append(
+                                    $('<div/>')
+                                    .attr("id", "div-img")
+                                    .append(
+                                        $('<img/>')
+                                        .attr("id", "img-recog")
+                                    )
                                 )
                             )
                         );
+                              
                         $('#chatbox').append(
                             $('<div/>')
                             .attr("id","msg")
@@ -140,9 +152,18 @@
                                 $('<div/>')
                                 .attr("id","rep-cont")
                                 .append(
+                                    $('<img/>')
+                                    .attr("id", "img-reply-recog")
+                                )
+                                .append(
+                                    $('<div/>')
+                                    .attr("id","p-recog")
+                                )
+                                .append(
                                     $('<p/>')
+                                    .attr("id","reply-msg")
                                     .addClass("reply")
-                                    .text("   EMOTE :  " +textreply)
+                                    .text(textreply)
                                 )
                             )
                         );

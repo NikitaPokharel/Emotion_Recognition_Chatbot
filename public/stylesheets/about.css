@@ -1,34 +1,25 @@
-body{
-    margin: 0;
-}
-.aboutus-container{
-    background-color: teal;
-    height: 70px;
-    
-}
 .color{
     display: flex;
-}
-
-.about-us{
-    margin: 0;
-    text-align: center;
-    color: white;
-    font-size: 30px;
-    padding: 20px;
+    width: 100%;
 }
 .lorem-text{
     margin-top: 60px;
-    width: 700px;
+    width: 750px;
     font-size: 20px;
-    margin-left: 50px;
+    margin-left: 40px;
 
 }
 #bot-image{
-    width: 600px;
-    height: 400px;
+    margin-top: 100px;
+    width: 300px;
+    height: 300px;
     margin-left: auto;
-    margin-right: 40px;
+    margin-right: auto;
+}
+.team-members{
+    margin-left: 40px;
+    color: teal;
+    text-align: center;
 }
 #card-wrapper{
     display: flex;
@@ -38,7 +29,7 @@ body{
 }
 .individual-card{
     width: 350px;
-    height: 400px;
+    height: 450px;
     text-align: center;
     background-color: #f5f6fb;
     border-top-left-radius: 45px;
@@ -68,4 +59,7 @@ body{
     margin-top: 0;
     padding: 20px;
     font-style: italic;
+}
+h4, .email{
+    color: teal;
 }
