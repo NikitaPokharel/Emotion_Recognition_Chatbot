@@ -1,15 +1,10 @@
 import pandas as pd
 import numpy as np
-import os
 import re
 import librosa
-import keras
 from keras.models import load_model
-
 import tensorflow as tf
 import speech_recognition as sr
-import pyttsx3 
-import tensorflow_datasets as tfds
 #from API import tokenizer, START_TOKEN, END_TOKEN, VOCAB_SIZE
 
 #EMOTION DETECTION
@@ -480,14 +475,14 @@ def generater(tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE,audiofile):
                 test.load_weights('Scripts\\mymodel.h5')
                 reply=predict(test,MyText,emotion,tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE)
     except sr.RequestError as e:
-        reply="error"
-        MyText='error'
-        print("Could not request results; {0}".format(e)+'please speak again.')
+        reply="Are you trying to say something? I did not catch that. Could you please repeat?"
+        MyText="..."
+        # print("Could not request results; {0}".format(e)+'please speak again.')
 
     except sr.UnknownValueError:
-        reply="error"
-        MyText='error'
-        print("Unknown error occured,please speak again..")
+        reply="Are you trying to say something? I did not catch that. Could you please repeat?"
+        MyText="..."
+        # print("Unknown error occured,please speak again..")
     return reply,MyText
     
 
