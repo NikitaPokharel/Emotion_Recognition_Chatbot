@@ -16,35 +16,35 @@ def optimize():
     optimizer = tf.keras.optimizers.Adam(learning_rate, beta_1=0.9, beta_2=0.98, epsilon=1e-9)
     return optimizer
 
-def generater(tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE,audiofile):
+def get_mytext(audiofile):
     r = sr.Recognizer() 
     hellow=sr.AudioFile(audiofile)
     with hellow as source:
         audio = r.record(source)
     try:
-                MyText2 = r.recognize_google(audio)
-                MyText = MyText2.lower()
-
-                print (MyText2)
-                
-                #GETTING EMOTIION
-                audio=audiofile
-                emotion=getemotion(audio,MyText)
-                
-                #GETTING REPLY
-                optimizer=optimize()
-                test=create_model(optimizer)
-                test.load_weights('Scripts\\mymodel.h5')
-                reply=predict(test,MyText,emotion,tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE)
+        MyText2 = r.recognize_google(audio)
+        print (MyText2)
     except sr.RequestError as e:
-        reply="Are you trying to say something? I did not catch that. Could you please repeat?"
         MyText2="..."
-        # print("Could not request results; {0}".format(e)+'please speak again.')
 
     except sr.UnknownValueError:
-        reply="Are you trying to say something? I did not catch that. Could you please repeat?"
-        MyText2="..."
-        # print("Unknown error occured,please speak again..")
-    return reply,MyText2
+        MyText2="..."       
+    return MyText2
+
+def generater(MyText,tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE,audiofile):
+    if MyText=="...":
+        reply='Are you trying to say something? I did not catch that. Could you please repeat?'
+    else:
+        #GETTING EMOTIION
+        audio=audiofile
+        MyText=MyText.lower()
+        emotion=getemotion(audio,MyText)
+
+        #GETTING REPLY
+        optimizer=optimize()
+        test=create_model(optimizer)
+        test.load_weights('Scripts\\mymodel.h5')
+        reply=predict(test,MyText,emotion,tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE)
+    return reply
     
 
