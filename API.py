@@ -62,28 +62,29 @@ tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE=buildtoken()
 #     return {"texts":MyText,"reply": reply}
 #     # return {"mytext":"hi","reply":"hello"}
 
+path=""
 text=""
 @app.post('/audio')
 def upload_audio(audio:UploadFile=File(...)):
-    file_location = f"static/audio/{audio.filename}"
+    file_location = f"static/audio/{uuid.uuid1()}{audio.filename}"
     with open (file_location, "wb+") as file_object:
         file_object.write(audio.file.read())
-    dest_path=f'static/audio/test.wav'
+    dest_path=f'static/audio/{uuid.uuid1()}test.wav'
     print(dest_path)
     command = f'ffmpeg -i {file_location} {dest_path}'
     subprocess.call(command,shell=True)
     MyText=get_mytext(dest_path)
-
+    global path
     global text
     text=MyText
-
+    path=dest_path
     os.remove(file_location)
     return {"texts":MyText}
 
 @app.get('/reply')
 def get_reply():
+    dest_path=path
     MyText=text
-    dest_path=f'static/audio/test.wav'
     reply=generater(MyText,tokenizer, START_TOKEN,END_TOKEN,VOCAB_SIZE,dest_path)
     print("****reply:",reply)
     print("****mytext:",MyText)
