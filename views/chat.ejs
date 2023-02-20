@@ -45,22 +45,27 @@
                 </center> -->
 
             </div>
+            
             </center>
             
         </div>    
 
     </div>
-    
+ 
 </div>
+<center>
+    <div  id="loading" >EMOTE is Typing...</div>
+</center>
 
 
         <div class=" mic col-4 text-center">
 
-            <i class="fa fa-microphone fa-3x"></i>
+            <i id="icon" class="fa fa-microphone fa-3x"></i>
             <br/>
             <span id="record" style="color: red; font-size: 15px;"></span>    
             <h6>Speak here</h6>
         </div>
+
 
         <script>
        
@@ -143,9 +148,11 @@
                                     )
                                 )
                             )
-                        );}
-                        function addReply(textreply){
-                              
+                        );
+                    }
+                    
+                    function addReply(textreply){
+        
                         $('#chatbox').append(
                             $('<div/>')
                             .attr("id","msg")
@@ -170,8 +177,8 @@
                             )
                         );
                     }
-                    
 
+                
                     fetch("http://localhost:8000/audio", {
                         method: "POST",
                         body: formdata
@@ -179,12 +186,21 @@
                         var recogtext = data.texts;
                         // console.log(recogtext)
                          addMessage(recogtext)
+                         document.getElementById("loading").style.display = "block";
+
+                        
+                        document.getElementById("icon").style.pointerEvents = "none";
+                        
                          fetch('http://localhost:8000/reply',{
                             method:"GET"
                          }).then(res=>res.json()).then(data=>{
                             var textreply= data.reply;
+
                             addReply(textreply)
+                            document.getElementById("loading").style.display = "none";
+                            document.getElementById("icon").style.pointerEvents = "auto";
                             // console.log(textreply)
+                            
                          })
                     });
 
