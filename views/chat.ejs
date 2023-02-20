@@ -18,8 +18,9 @@
     <label class="logo">EMOTE</label>
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/chat">Chat</a></li>
+        <li><a href="/jokes">Jokes</a></li>
         <li><a href="/quote">Quote</a></li>
+        
         <li><a href="/about">About</a></li>
     </ul>
 </nav>
@@ -118,7 +119,7 @@
                     formdata.append('audio', file);
                     console.log(formdata);
                     
-                    function addMessage(recogtext, textreply) {
+                    function addMessage(recogtext) {
                         $('#chatbox').append(
                             $('<div/>')
                             .attr("id","msg")
@@ -142,7 +143,8 @@
                                     )
                                 )
                             )
-                        );
+                        );}
+                        function addReply(textreply){
                               
                         $('#chatbox').append(
                             $('<div/>')
@@ -168,14 +170,22 @@
                             )
                         );
                     }
+                    
 
                     fetch("http://localhost:8000/audio", {
                         method: "POST",
                         body: formdata
                     }).then(res => res.json()).then(data => {
                         var recogtext = data.texts;
-                        var textreply= data.reply;
-                         addMessage(recogtext,textreply)
+                        // console.log(recogtext)
+                         addMessage(recogtext)
+                         fetch('http://localhost:8000/reply',{
+                            method:"GET"
+                         }).then(res=>res.json()).then(data=>{
+                            var textreply= data.reply;
+                            addReply(textreply)
+                            // console.log(textreply)
+                         })
                     });
 
             buffer.length = 0; // empty the buffer for the next one

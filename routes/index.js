@@ -19,4 +19,8 @@ router.get('/about',function(req,res,next){
   res.render('about');
 });
 
+router.get('/jokes',function(req,res,next){
+  res.render('jokes');
+});
+
 module.exports = router;
