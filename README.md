@@ -1,3 +1,5 @@
 # Emotion_Recognition_Chatbot
 
-This is in development phase.
+This is stable phase,Version 1
+
+
